@@ -12,6 +12,7 @@
     <modules>
         <module>demo</module>
         <module>elasticsearch-demo</module>
+        <module>mybatisDemo</module>
     </modules>
 
 
