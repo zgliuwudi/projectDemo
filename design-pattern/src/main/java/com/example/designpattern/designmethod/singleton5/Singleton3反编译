@@ -1,0 +1,37 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3)
+// Source File Name:   Singleton3.java
+
+package com.example.designpattern.designmethod.singleton5;
+
+
+public final class Singleton3 extends Enum
+{
+
+    public static Singleton3[] values()
+    {
+        return (Singleton3[])$VALUES.clone();
+    }
+
+    public static Singleton3 valueOf(String name)
+    {
+        return (Singleton3)Enum.valueOf(com/example/designpattern/designmethod/singleton5/Singleton3, name);
+    }
+
+    private Singleton3(String s, int i)
+    {
+        super(s, i);
+    }
+
+    public static final Singleton3 INSTANCE;
+    private static final Singleton3 $VALUES[];
+
+    static
+    {
+        INSTANCE = new Singleton3("INSTANCE", 0);
+        $VALUES = (new Singleton3[] {
+            INSTANCE
+        });
+    }
+}
