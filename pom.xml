@@ -13,6 +13,9 @@
         <module>demo</module>
         <module>elasticsearch-demo</module>
         <module>mybatisDemo</module>
+        <module>springDemo</module>
+        <module>analyse-spring-code</module>
+        <module>springmvcDemo</module>
     </modules>
 
 

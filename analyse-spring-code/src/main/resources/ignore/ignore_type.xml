@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-autowire="byType">
+
+    <bean id="list" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <value>hello</value>
+                <value>Spring</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id = "ignorDependency" class="com.springcode.controller.ignore.type.IgnoreDependencyByType"></bean>
+    <bean class="com.springcode.controller.ignore.type.IgnoreDependencyTypeHelper"/>
+
+</beans>

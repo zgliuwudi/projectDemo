@@ -1,0 +1,48 @@
+new DefaultListableBeanFactory()
+    |-AbstractAutowireCapableBeanFactory#public AbstractAutowireCapableBeanFactory()
+        |-#public void ignoreDependencyInterface(Class<?> ifc)
+pathmatchResourcePatternResolver
+resource = getResourceLoader().getResource(locationPattern)\
+
+
+reader.loadBeanDefinitions(path)
+    |-AbstractBeanDefinitionReader
+        #int loadBeanDefinitions(String location)
+            #int loadBeanDefinitions(String location, @Nullable Set<Resource> actualResources)
+                ^resourceLoader
+                ^Resource[] resources
+                ^loadCount=3
+                    #int loadBeanDefinitions(Resource... resources)
+                        |-XmlBeanDefinitionReader
+                        #int loadBeanDefinitions(Resource resource)
+                        #int loadBeanDefinitions(EncodedResource encodedResource)
+                        doLoadBeanDefinitions(inputSource, encodedResource.getResource())
+                            #int doLoadBeanDefinitions(InputSource inputSource, Resource resource)
+                            Document doc = doLoadDocument(inputSource, resource)
+                                #Document doLoadDocument(InputSource inputSource, Resource resource)
+                                    |-DefaultDocumentLoader
+                                    #Document loadDocument(InputSource inputSource, EntityResolver entityResolver,ErrorHandler errorHandler, int validationMode, boolean namespaceAware)
+                                        DocumentBuilderFactory factory
+                                        DocumentBuilder builder
+                                        builder.parse(inputSource)
+                                            |-DocumentBuilderImpl
+                                            #Document parse(InputSource is)
+                                                domParser.parse(is)
+                                                    |-DOMParser
+                                                    #void parse(InputSource inputSource)
+                                                        |-XMLParser
+                                                        void parse(XMLInputSource inputSource)
+                                                            |-AbstractDOMParser
+                                                            #void reset ()
+                            registerBeanDefinitions(doc, resource)
+                                #int registerBeanDefinitions(Document doc, Resource resource)
+                                    ^BeanDefinitionDocumentReader documentReader
+                                    ^getRegistry().getBeanDefinitionCount()
+                                        |-DefaultListableBeanFactory
+                                        #int getBeanDefinitionCount()
+                                    ^documentReader.registerBeanDefinitions(doc, createReaderContext(resource))
+                                        |-DefaultBeanDefinitionDocumentReader
+                                        #void registerBeanDefinitions(Document doc, XmlReaderContext readerContext)
+                                            ^doRegisterBeanDefinitions(root)
+                                                #void doRegisterBeanDefinitions(Element root)
+                                                    ^parseBeanDefinitions(root, this.delegate)

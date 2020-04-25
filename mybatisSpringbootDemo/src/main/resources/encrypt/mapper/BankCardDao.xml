@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.demo.encrypt.dao.BankCardDao">
+
+    <resultMap type="com.mybatis.demo.encrypt.entity.BankCard" id="BankCardMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtUpdate" column="gmt_update" jdbcType="TIMESTAMP"/>
+        <result property="cardNo" column="card_no" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="idNo" column="id_no" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BankCardMap">
+        select
+          id, gmt_create, gmt_update, card_no, phone, name, id_no
+        from test.bank_card
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BankCardMap">
+        select
+          id, gmt_create, gmt_update, card_no, phone, name, id_no
+        from test.bank_card
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BankCardMap">
+        select
+          id, gmt_create, gmt_update, card_no, phone, name, id_no
+        from test.bank_card
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="gmtCreate != null">
+                and gmt_create = #{gmtCreate}
+            </if>
+            <if test="gmtUpdate != null">
+                and gmt_update = #{gmtUpdate}
+            </if>
+            <if test="cardNo != null and cardNo != ''">
+                and card_no = #{cardNo}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="idNo != null and idNo != ''">
+                and id_no = #{idNo}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into test.bank_card(gmt_create, gmt_update, card_no, phone, name, id_no)
+        values (#{gmtCreate}, #{gmtUpdate}, #{cardNo}, #{phone}, #{name}, #{idNo})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update test.bank_card
+        <set>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
+            </if>
+            <if test="gmtUpdate != null">
+                gmt_update = #{gmtUpdate},
+            </if>
+            <if test="cardNo != null and cardNo != ''">
+                card_no = #{cardNo},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="idNo != null and idNo != ''">
+                id_no = #{idNo},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from test.bank_card where id = #{id}
+    </delete>
+
+
+    <insert id="insertBankCardEncrypt" keyProperty="id" useGeneratedKeys="true" parameterType="com.mybatis.demo.encrypt.entity.BankCard">
+        INSERT INTO bank_card (card_no, phone,name,id_no)
+        VALUES
+        (#{cardNo,typeHandler=com.mybatis.demo.encrypt.handler.CrypyTypeHandler},
+        #{phone,typeHandler=com.mybatis.demo.encrypt.handler.CrypyTypeHandler},
+        #{name,typeHandler=com.mybatis.demo.encrypt.handler.CrypyTypeHandler},
+        #{idNo,typeHandler=com.mybatis.demo.encrypt.handler.CrypyTypeHandler})
+
+    </insert>
+
+</mapper>
