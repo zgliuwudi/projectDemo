@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+# autuator 监控配置
+# 访问地址： http://127.0.0.1:8888/base
+management:
+  server:
+    port: 8888
+  endpoints:
+    web:
+      base-path: /base
+      exposure:
+        include: "*"
+        exclude: env,beans
+# 访问地址: http://127.0.0.1:8888/base/info
+info:
+  auth: wudi
+  date: 2020-06-10
